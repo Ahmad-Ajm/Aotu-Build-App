@@ -1,4 +1,4 @@
-#  نطاق المشروع (Project Scope)
+# نطاق المشروع (Project Scope)
 ## ضمن النطاق
 - ميزات المرحلة الأولى (MVP).
 - التقنيات: .NET 8 + ABP.io، Angular، PostgreSQL، LeptonX.
