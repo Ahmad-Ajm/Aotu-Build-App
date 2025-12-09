@@ -1,3 +1,4 @@
+قالب
 # CQRS Handlers
 
 معالجات الأوامر والاستعلامات (Command & Query Handlers).

@@ -1,3 +1,4 @@
+قالب
 # ABP Features Configuration
 
 تكوين الميزات (Features) في ABP Framework للتحكم في الوظائف حسب الاشتراكات.

@@ -1,3 +1,4 @@
+قالب
 # ABP Settings
 
 إعدادات التطبيق (Settings) في ABP Framework.

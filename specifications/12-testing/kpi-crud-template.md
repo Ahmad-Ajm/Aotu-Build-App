@@ -1,3 +1,4 @@
+قالب
 # KPI Template – CRUD Full-Stack Feature
 #
 # الهدف

@@ -1,3 +1,4 @@
+قالب
 # إعدادات وحدات ABP
 - تمكين الوحدات: Identity, TenantManagement, SettingManagement
 - وحدات التطبيق: Catalog, Orders

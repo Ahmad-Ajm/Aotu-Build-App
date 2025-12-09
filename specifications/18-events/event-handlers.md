@@ -1,3 +1,4 @@
+قالب
 # Event Handlers
 
 معالجات الأحداث (Event Handlers) التي تستجيب للـ Domain Events.

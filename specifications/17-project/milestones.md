@@ -1,3 +1,4 @@
+قالب
 # المعالم (Milestones)
 - M1: جاهزية الهيكل ABP + PostgreSQL + Angular
 - M2: نواة المجالات الأساسية

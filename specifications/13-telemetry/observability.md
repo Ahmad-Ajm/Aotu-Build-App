@@ -1,3 +1,4 @@
+قالب
 # المراقبة والملاحظة (Observability)
 - تسجيل (Serilog)
 - قياسات (Prometheus/OpenTelemetry)

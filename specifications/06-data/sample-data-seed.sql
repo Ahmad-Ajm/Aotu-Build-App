@@ -1,3 +1,4 @@
+قالب
 -- بيانات اختبارية
 INSERT INTO public.customers (id, name, email) VALUES
   (gen_random_uuid(), 'أحمد', 'ahmad@example.com'),

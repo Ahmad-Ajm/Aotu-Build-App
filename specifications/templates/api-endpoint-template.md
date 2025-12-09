@@ -1,3 +1,4 @@
+قالب
 # API Endpoint Template
 
 قالب لتوثيق نقطة نهاية API جديدة.

@@ -1,3 +1,4 @@
+قالب
 # خطة الأمان
 - المصادقة: OpenIddict/IdentityServer (حسب قالب ABP)
 - التفويض: Permissions + Policies

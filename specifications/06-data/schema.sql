@@ -1,3 +1,4 @@
+قالب
 -- PostgreSQL schema (مبدئي)
 CREATE TABLE IF NOT EXISTS public.customers (
   id UUID PRIMARY KEY,

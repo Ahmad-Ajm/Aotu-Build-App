@@ -1,3 +1,4 @@
+قالب
 # KPI Template – Security / Permissions Feature
 
 الهدف من هذا القالب هو تعريف **Definition of Done** لهذا النوع من الميزات.

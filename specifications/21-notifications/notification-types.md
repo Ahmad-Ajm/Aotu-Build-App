@@ -1,3 +1,4 @@
+قالب
 # Notification Types
 
 أنواع الإشعارات (Notifications) المستخدمة في النظام.

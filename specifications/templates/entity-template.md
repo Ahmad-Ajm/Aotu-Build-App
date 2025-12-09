@@ -1,3 +1,4 @@
+قالب
 # Entity Template
 
 قالب لتوثيق كيان جديد (Entity).
