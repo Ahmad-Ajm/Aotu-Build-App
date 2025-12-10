@@ -1,0 +1,4 @@
+قالب
+# ADR-0002: حدود الوحدات (Modules)
+- الوحدات: Identity، SaaS/TenantManagement، Orders، Catalog ...
+- Dependency rules: لا يعتمد Domain على طبقات أعلى، فصل واضح بين Application و Infrastructure.
