@@ -15,7 +15,7 @@
 | FEAT-CV-CREATION            | ✅ مكتمل (clarify)     | 🟡 قيد التقدم (plan)     | ❌ لم يبدأ               | 🟡 قيد التقدم (tasks)    |
 | FEAT-USER-LOGIN             | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
 | FEAT-CV-EXPORT              | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
-| FEAT-USER-REGISTRATION      | ❌ لم يبدأ             | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
+| FEAT-USER-REGISTRATION      | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
 
 ---
 
