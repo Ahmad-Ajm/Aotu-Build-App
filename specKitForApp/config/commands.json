@@ -1,0 +1,198 @@
+{
+  "$schema": "https://example.com/specKitForApp/commands.schema.json",
+  "version": 1,
+  "description": "Central command registry for SpecKitForApp running on top of GitHub + n8n + HTTP LLM. Each command describes which prompt to use, what context files to load from the repo, and where to write outputs for a given featureKey.",
+  "commands": {
+    "clarify": {
+      "name": "clarify",
+      "description": "Analyze an existing feature spec and related context, then produce a clarification document that captures assumptions, decisions, and refined understanding before planning.",
+      "promptFile": "specKitForApp/prompts/clarify.md",
+      "outputPattern": "specifications/11-features/{featureKey}/clarify.md",
+      "inputContext": [
+        {
+          "key": "conversationLog",
+          "description": "حرّف سجل المحادثة مع مالك الميزة (لغة أعمال فقط) لمسار ملف واحد يتم تمريره من n8n.",
+          "pathTemplate": "{conversationFilePath}",
+          "required": true
+        },
+        {
+          "key": "currentSpec",
+          "description": "ملف spec الحالي للميزة إن وجد.",
+          "pathTemplate": "specifications/11-features/{featureKey}/spec.md",
+          "required": false
+        },
+        {
+          "key": "featureMap",
+          "description": "خريطة الميزات على مستوى المشروع إن وجدت.",
+          "pathTemplate": "specifications/11-features/features-map.md",
+          "required": false
+        },
+        {
+          "key": "brd",
+          "description": "مستند BRD على مستوى المشروع إن وجد.",
+          "pathTemplate": "specifications/10-brd/brd.md",
+          "required": false,
+          "todo": "تأكيد المسار النهائي للـ BRD مع مالك المشروع أو تعديله هنا."
+        }
+      ],
+      "requiresFeatureKey": true,
+      "requiresConversationLog": true,
+      "dependsOn": [],
+      "produces": "clarifyDoc",
+      "llmModelHint": "gpt-4.1-mini"
+    },
+    "plan": {
+      "name": "plan",
+      "description": "Generate an implementation plan (architecture, phases, data model overview) for a single feature based on its clarified spec and project constitution.",
+      "promptFile": "specKitForApp/prompts/plan.md",
+      "outputPattern": "specifications/11-features/{featureKey}/plan.md",
+      "inputContext": [
+        {
+          "key": "currentSpec",
+          "description": "الملف spec.md الخاص بالميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/spec.md",
+          "required": true
+        },
+        {
+          "key": "clarifyDoc",
+          "description": "ناتج أمر clarify للميزة (إن وجد).",
+          "pathTemplate": "specifications/11-features/{featureKey}/clarify.md",
+          "required": false
+        },
+        {
+          "key": "constitution",
+          "description": "ملف الدستور المعماري للمشروع.",
+          "pathTemplate": ".specify/memory/constitution.md",
+          "required": false,
+          "todo": "تأكيد ما إذا كان هذا هو المسار الرسمي لدستور المشروع في جميع الريبوهات."
+        }
+      ],
+      "requiresFeatureKey": true,
+      "requiresConversationLog": false,
+      "dependsOn": ["specify", "clarify"],
+      "produces": "planDoc",
+      "llmModelHint": "gpt-4.1-mini"
+    },
+    "specify": {
+      "name": "specify",
+      "description": "Create or update spec.md for a feature starting from a natural language description and available project context (BRD, feature map, conversation log).",
+      "promptFile": "specKitForApp/prompts/specify.md",
+      "outputPattern": "specifications/11-features/{featureKey}/spec.md",
+      "inputContext": [
+        {
+          "key": "featureDescription",
+          "description": "الوصف الحر للميزة كما كتبه المستخدم (يُمرَّر من n8n، وليس من ملف).",
+          "pathTemplate": null,
+          "required": true
+        },
+        {
+          "key": "conversationLog",
+          "description": "سجل المحادثة (إن وجد) الذي يوسّع وصف الميزة.",
+          "pathTemplate": "{conversationFilePath}",
+          "required": false
+        },
+        {
+          "key": "featureMap",
+          "description": "خريطة الميزات على مستوى المشروع لربط الميزة بسياق المشروع.",
+          "pathTemplate": "specifications/11-features/features-map.md",
+          "required": false
+        },
+        {
+          "key": "brd",
+          "description": "ملف BRD عام للمشروع إن وجد.",
+          "pathTemplate": "specifications/10-brd/brd.md",
+          "required": false,
+          "todo": "تأكيد هيكل مجلد BRD النهائي."
+        }
+      ],
+      "requiresFeatureKey": true,
+      "requiresConversationLog": false,
+      "dependsOn": [],
+      "produces": "specDoc",
+      "llmModelHint": "gpt-4.1-mini"
+    },
+    "tasks": {
+      "name": "tasks",
+      "description": "Generate dependency-ordered tasks.md for a feature using plan.md, spec.md, and other design docs (data model, contracts, research).",
+      "promptFile": "specKitForApp/prompts/tasks.md",
+      "outputPattern": "specifications/11-features/{featureKey}/tasks.md",
+      "inputContext": [
+        {
+          "key": "currentPlan",
+          "description": "ملف plan.md للميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/plan.md",
+          "required": true
+        },
+        {
+          "key": "currentSpec",
+          "description": "ملف spec.md للميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/spec.md",
+          "required": true
+        },
+        {
+          "key": "dataModel",
+          "description": "ملف data-model.md إن وُجد.",
+          "pathTemplate": "specifications/11-features/{featureKey}/data-model.md",
+          "required": false
+        },
+        {
+          "key": "contractsDir",
+          "description": "مجلد العقود (API contracts) إن وُجد.",
+          "pathTemplate": "specifications/11-features/{featureKey}/contracts/",
+          "required": false
+        },
+        {
+          "key": "researchDoc",
+          "description": "ملف research.md إن وُجد لتسجيل القرارات.",
+          "pathTemplate": "specifications/11-features/{featureKey}/research.md",
+          "required": false
+        }
+      ],
+      "requiresFeatureKey": true,
+      "requiresConversationLog": false,
+      "dependsOn": ["plan", "specify"],
+      "produces": "tasksDoc",
+      "llmModelHint": "gpt-4.1-mini"
+    },
+    "analyze": {
+      "name": "analyze",
+      "description": "Read spec.md, plan.md, tasks.md and produce a read-only consistency and coverage analysis report.",
+      "promptFile": "specKitForApp/prompts/analyze.md",
+      "outputPattern": "specifications/11-features/{featureKey}/analysis.md",
+      "inputContext": [
+        {
+          "key": "currentSpec",
+          "description": "spec.md للميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/spec.md",
+          "required": true
+        },
+        {
+          "key": "currentPlan",
+          "description": "plan.md للميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/plan.md",
+          "required": true
+        },
+        {
+          "key": "currentTasks",
+          "description": "tasks.md للميزة.",
+          "pathTemplate": "specifications/11-features/{featureKey}/tasks.md",
+          "required": true
+        },
+        {
+          "key": "constitution",
+          "description": "دستور المشروع `.specify/memory/constitution.md` إن تم اعتماده كمرجع ثابت.",
+          "pathTemplate": ".specify/memory/constitution.md",
+          "required": false,
+          "todo": "تأكيد ما إذا كان هذا المسار ثابتًا في كل المشاريع التي ستستخدم SpecKitForApp."
+        }
+      ],
+      "requiresFeatureKey": true,
+      "requiresConversationLog": false,
+      "dependsOn": ["specify", "plan", "tasks"],
+      "produces": "analysisDoc",
+      "llmModelHint": "gpt-4.1-mini"
+    }
+  }
+}
+
+
