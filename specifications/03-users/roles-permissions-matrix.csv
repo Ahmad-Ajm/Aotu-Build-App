@@ -1,0 +1,5 @@
+قالب
+Role,ABP Permission,Module,Description
+Admin,MyApp.*,App,Full access
+Manager,MyApp.Orders.Manage,Orders,CRUD orders
+Viewer,MyApp.Orders.View,Orders,Read-only
