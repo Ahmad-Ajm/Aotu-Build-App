@@ -12,7 +12,7 @@
 
 | الميزة                      | حالة clarify           | حالة plan                | حالة specify             | حالة tasks               |
 |-----------------------------|------------------------|--------------------------|--------------------------|--------------------------|
-| FEAT-CV-CREATION            | ✅ مكتمل (clarify)     | ✅ مكتمل (plan)          | ❌ لم يبدأ               | 🟡 قيد التقدم (tasks)    |
+| FEAT-CV-CREATION            | ✅ مكتمل (clarify)     | ✅ مكتمل (plan)          | ❌ لم يبدأ               | ✅ مكتمل (tasks)         |
 | FEAT-USER-LOGIN             | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
 | FEAT-CV-EXPORT              | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
 | FEAT-USER-REGISTRATION      | ✅ مكتمل (clarify)     | ❌ لم يبدأ               | ❌ لم يبدأ               | ❌ لم يبدأ               |
@@ -25,7 +25,7 @@
 - تم إنشاء مجلد `speckitfiles/FEAT-CV-EXPORT/` وملف `clarify.md` (مكتمل)
 - تم إنشاء مجلد `speckitfiles/FEAT-USER-REGISTRATION/` وملف `clarify.md` (مكتمل)
 - تم إنشاء ملف `plan.md` لميزة FEAT-CV-CREATION (مكتمل)
-- تم تحديث ملف `tasks.md` لميزة FEAT-CV-CREATION (قيد التقدم)
+- تم إنشاء ملف `tasks.md` لميزة FEAT-CV-CREATION (مكتمل)
 - تم إنشاء ملف `specify.md` لميزة FEAT-CV-CREATION (مكتمل)
 - تم إنشاء ملف `plan.md` لميزة FEAT-USER-LOGIN (مكتمل)
 - تم إنشاء ملف `specify.md` لميزة FEAT-USER-LOGIN (مكتمل)
