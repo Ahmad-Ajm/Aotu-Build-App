@@ -1,6 +1,0 @@
-قالب
-# المراقبة والملاحظة (Observability)
-- تسجيل (Serilog)
-- قياسات (Prometheus/OpenTelemetry)
-- تتبع (Jaeger)
-- لوحات (Grafana)
