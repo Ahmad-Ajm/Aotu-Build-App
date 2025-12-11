@@ -11,7 +11,7 @@
 | clarify | plan | specify | tasks | الميزة في SpecKit | ID الميزة في SpecKit | تقدم الميزة في SpecKit | كتابة الاكواد |
 |---------|------|---------|-------|-------------------|----------------------|------------------------|--------------|
 | ✅ | ✅ | ✅ | ✅ | In-Progress | FEAT-CV-CREATION | 100% | NotStarted |
-| ✅ | ✅ | ✅ | ✅ | In-Progress | FEAT-USER-REGISTRATION |100% | NotStarted |
+| X | X | X | X | NotStarted | FEAT-USER-REGISTRATION |0% | NotStarted |
 
 ---
 
