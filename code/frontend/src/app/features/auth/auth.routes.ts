@@ -19,7 +19,7 @@ export const authRoutes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
-    data: { title: 'نسيت كلمة المرور' }
+    data: { title: 'استعادة كلمة المرور' }
   },
   {
     path: 'profile',
