@@ -1,0 +1,154 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h1 class="register-title">إنشاء حساب جديد</h1>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p class="register-subtitle">سجل الآن لإنشاء وإدارة سيرتك الذاتية</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        
+        <!-- الاسم الكامل -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>الاسم الكامل</mat-label>
+          <input matInput formControlName="fullName" placeholder="أدخل اسمك الكامل">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+            {{ getErrorMessage('fullName') }}
+          </mat-error>
+          <mat-hint>يجب أن يكون بين 2 و 100 حرف</mat-hint>
+        </mat-form-field>
+
+        <!-- البريد الإلكتروني -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>البريد الإلكتروني</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="example@domain.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            {{ getErrorMessage('email') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- اسم المستخدم (اختياري) -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>اسم المستخدم (اختياري)</mat-label>
+          <input matInput formControlName="userName" placeholder="سيتم استخدام البريد الإلكتروني إذا لم تدخل اسماً">
+          <mat-icon matSuffix>alternate_email</mat-icon>
+          <mat-error *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched">
+            {{ getErrorMessage('userName') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- كلمة المرور -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>كلمة المرور</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" 
+                 formControlName="password" placeholder="أدخل كلمة المرور">
+          <button mat-icon-button matSuffix type="button" 
+                  (click)="hidePassword = !hidePassword" 
+                  [attr.aria-label]="'إظهار كلمة المرور'">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            {{ getErrorMessage('password') }}
+          </mat-error>
+          <mat-hint>8 أحرف على الأقل، تحتوي على حرف كبير وصغير ورقم</mat-hint>
+        </mat-form-field>
+
+        <!-- تأكيد كلمة المرور -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>تأكيد كلمة المرور</mat-label>
+          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" 
+                 formControlName="confirmPassword" placeholder="أعد إدخال كلمة المرور">
+          <button mat-icon-button matSuffix type="button" 
+                  (click)="hideConfirmPassword = !hideConfirmPassword" 
+                  [attr.aria-label]="'إظهار كلمة المرور'">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+            {{ getErrorMessage('confirmPassword') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- تاريخ الميلاد (اختياري) -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>تاريخ الميلاد (اختياري)</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- الجنسية (اختياري) -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>الجنسية (اختياري)</mat-label>
+          <input matInput formControlName="nationality" placeholder="أدخل جنسيتك">
+          <mat-icon matSuffix>flag</mat-icon>
+          <mat-error *ngIf="registerForm.get('nationality')?.invalid && registerForm.get('nationality')?.touched">
+            {{ getErrorMessage('nationality') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- قبول الشروط -->
+        <mat-checkbox formControlName="acceptTerms" class="terms-checkbox">
+          أوافق على <a href="/terms" target="_blank">شروط الاستخدام</a> و <a href="/privacy" target="_blank">سياسة الخصوصية</a>
+        </mat-checkbox>
+        <mat-error *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" 
+                   class="terms-error">
+          يجب الموافقة على الشروط والأحكام
+        </mat-error>
+
+        <!-- زر التسجيل -->
+        <button mat-raised-button color="primary" type="submit" 
+                class="register-button full-width" 
+                [disabled]="registerForm.invalid || isLoading">
+          <span *ngIf="!isLoading">إنشاء حساب</span>
+          <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="register-actions">
+      <div class="login-link">
+        <p>لديك حساب بالفعل؟ 
+          <button mat-button color="primary" (click)="goToLogin()">سجل الدخول</button>
+        </p>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- معلومات إضافية -->
+  <div class="register-info">
+    <mat-card class="info-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>مزايا التسجيل</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>check_circle</mat-icon>
+            <span matListItemTitle>إنشاء سير ذاتية غير محدودة</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>check_circle</mat-icon>
+            <span matListItemTitle>حفظ وتعديل السير الذاتية</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>check_circle</mat-icon>
+            <span matListItemTitle>مشاركة السير الذاتية مع الآخرين</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>check_circle</mat-icon>
+            <span matListItemTitle>تصدير السير الذاتية بصيغ مختلفة</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
