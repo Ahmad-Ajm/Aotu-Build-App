@@ -15,6 +15,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 // Components
 import { RegisterComponent } from './register/register.component';
@@ -49,7 +52,10 @@ import { authRoutes } from './auth.routes';
     MatSnackBarModule,
     MatTabsModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule
   ],
   exports: [
     RegisterComponent,
