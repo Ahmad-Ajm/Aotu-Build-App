@@ -11,186 +11,104 @@ on:
         description: "Attempt number"
         required: false
         type: string
-
-env:
-  DOTNET_VERSION: "8.0.x"
-  NODE_VERSION: "20"
-  BACKEND_DIR: "code/backend"
-  FRONTEND_DIR: "code/frontend"
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print inputs
-        run: |
-          echo "featureKey=${{ inputs.featureKey }}"
-          echo "attempt=${{ inputs.attempt }}"
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # -------------------------
-      # Backend (.NET) - ABP aware
-      # -------------------------
+      # =========================
+      # Backend (.NET / ABP)
+      # =========================
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-          cache: true
-          cache-dependency-path: |
-            ${{ env.BACKEND_DIR }}/**/*.csproj
-            ${{ env.BACKEND_DIR }}/**/*.sln
-            ${{ env.BACKEND_DIR }}/**/packages.lock.json
+          dotnet-version: "8.0.x"
 
-      - name: Detect .NET build target
-        id: dotnet_target
+      - name: Detect .NET entry (sln/csproj)
+        id: dotnet_detect
+        working-directory: code/backend
+        shell: bash
         run: |
           set -e
-
-          if [ ! -d "${{ env.BACKEND_DIR }}" ]; then
-            echo "found=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # 1) Prefer SLN anywhere under backend
-          SLN=$(find "${{ env.BACKEND_DIR }}" -maxdepth 12 -name "*.sln" | head -n 1 || true)
+          SLN=$(find . -maxdepth 4 -name "*.sln" | head -n 1 || true)
           if [ -n "$SLN" ]; then
-            echo "found=true" >> $GITHUB_OUTPUT
-            echo "type=sln" >> $GITHUB_OUTPUT
             echo "path=$SLN" >> $GITHUB_OUTPUT
+            echo "type=sln"  >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # 2) ABP: prefer Host project if no SLN
-          HOST=$(find "${{ env.BACKEND_DIR }}" -maxdepth 15 \( -name "*HttpApi.Host*.csproj" -o -name "*Web*.csproj" -o -name "*Host*.csproj" \) | head -n 1 || true)
-          if [ -n "$HOST" ]; then
-            echo "found=true" >> $GITHUB_OUTPUT
-            echo "type=host_csproj" >> $GITHUB_OUTPUT
-            echo "path=$HOST" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          # 3) Fallback: any csproj
-          CSPROJ=$(find "${{ env.BACKEND_DIR }}" -maxdepth 15 -name "*.csproj" | head -n 1 || true)
+          CSPROJ=$(find . -maxdepth 6 -name "*.csproj" | head -n 1 || true)
           if [ -n "$CSPROJ" ]; then
-            echo "found=true" >> $GITHUB_OUTPUT
-            echo "type=csproj_all" >> $GITHUB_OUTPUT
             echo "path=$CSPROJ" >> $GITHUB_OUTPUT
+            echo "type=csproj"  >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          echo "found=false" >> $GITHUB_OUTPUT
+          echo "type=none" >> $GITHUB_OUTPUT
 
-      - name: Restore (.NET)
-        if: steps.dotnet_target.outputs.found == 'true'
+      - name: Restore backend
+        if: steps.dotnet_detect.outputs.type != 'none'
+        working-directory: code/backend
+        run: dotnet restore "${{ steps.dotnet_detect.outputs.path }}"
+
+      - name: Build backend
+        if: steps.dotnet_detect.outputs.type != 'none'
+        working-directory: code/backend
+        run: dotnet build "${{ steps.dotnet_detect.outputs.path }}" -c Release --no-restore
+
+      - name: Test backend (if any test projects exist)
+        if: steps.dotnet_detect.outputs.type != 'none'
+        working-directory: code/backend
+        shell: bash
         run: |
           set -e
-
-          T="${{ steps.dotnet_target.outputs.type }}"
-          P="${{ steps.dotnet_target.outputs.path }}"
-
-          if [ "$T" = "sln" ]; then
-            dotnet restore "$P"
-            exit 0
-          fi
-
-          if [ "$T" = "host_csproj" ]; then
-            dotnet restore "$P"
-            exit 0
-          fi
-
-          mapfile -d '' PROJS < <(find "${{ env.BACKEND_DIR }}" -maxdepth 15 -name "*.csproj" -print0)
-          if [ ${#PROJS[@]} -eq 0 ]; then
-            echo "No csproj found. Skipping."
-            exit 0
-          fi
-          for p in "${PROJS[@]}"; do
-            dotnet restore "$p"
-          done
-
-      - name: Build (.NET)
-        if: steps.dotnet_target.outputs.found == 'true'
-        run: |
-          set -e
-
-          T="${{ steps.dotnet_target.outputs.type }}"
-          P="${{ steps.dotnet_target.outputs.path }}"
-
-          if [ "$T" = "sln" ]; then
-            dotnet build "$P" -c Release --no-restore
-            exit 0
-          fi
-
-          if [ "$T" = "host_csproj" ]; then
-            dotnet build "$P" -c Release --no-restore
-            exit 0
-          fi
-
-          mapfile -d '' PROJS < <(find "${{ env.BACKEND_DIR }}" -maxdepth 15 -name "*.csproj" -print0)
-          if [ ${#PROJS[@]} -eq 0 ]; then
-            echo "No csproj found. Skipping."
-            exit 0
-          fi
-          for p in "${PROJS[@]}"; do
-            dotnet build "$p" -c Release --no-restore
-          done
-
-      - name: Test (.NET) if test projects exist
-        if: steps.dotnet_target.outputs.found == 'true'
-        run: |
-          set -e
-
-          mapfile -d '' TESTS < <(find "${{ env.BACKEND_DIR }}" -maxdepth 20 \( -name "*Test*.csproj" -o -name "*Tests*.csproj" \) -print0)
-          if [ ${#TESTS[@]} -eq 0 ]; then
+          TESTPROJ=$(find . -maxdepth 8 -name "*Test*.csproj" -o -name "*Tests*.csproj" | head -n 1 || true)
+          if [ -n "$TESTPROJ" ]; then
+            dotnet test -c Release --no-build
+          else
             echo "No test projects found. Skipping dotnet test."
-            exit 0
           fi
 
-          T="${{ steps.dotnet_target.outputs.type }}"
-          P="${{ steps.dotnet_target.outputs.path }}"
-
-          if [ "$T" = "sln" ]; then
-            dotnet test "$P" -c Release --no-build
-            exit 0
-          fi
-
-          # For host/all-csproj: run test projects only
-          for t in "${TESTS[@]}"; do
-            dotnet test "$t" -c Release --no-build
-          done
-
-      # -------------------------
-      # Frontend (Node/Angular)
-      # -------------------------
+      # =========================
+      # Frontend (Angular)
+      # =========================
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: "20"
 
-      - name: Frontend - install & build (if exists)
+      - name: Install frontend dependencies
+        working-directory: code/frontend
+        shell: bash
         run: |
           set -e
-
-          if [ ! -d "${{ env.FRONTEND_DIR }}" ]; then
-            echo "No frontend directory. Skipping."
+          if [ ! -f package.json ]; then
+            echo "No package.json in code/frontend. Skipping frontend."
             exit 0
           fi
-          if [ ! -f "${{ env.FRONTEND_DIR }}/package.json" ]; then
-            echo "No package.json in frontend. Skipping."
-            exit 0
-          fi
-
-          cd "${{ env.FRONTEND_DIR }}"
-
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
 
-          node -e "const p=require('./package.json'); if(!p.scripts||!p.scripts.build){console.error('Missing scripts.build'); process.exit(1)}"
+      - name: Build frontend
+        working-directory: code/frontend
+        shell: bash
+        run: |
+          set -e
+          if [ ! -f package.json ]; then
+            echo "No package.json in code/frontend. Skipping frontend build."
+            exit 0
+          fi
           npm run build
