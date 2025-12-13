@@ -37,12 +37,12 @@ jobs:
     - name: Restore backend dependencies
       run: |
         cd ${{ env.BACKEND_DIR }}
-        dotnet restore
+        dotnet restore ./src/Http/API/CVSystem.API.csproj
 
     - name: Build backend
       run: |
         cd ${{ env.BACKEND_DIR }}
-        dotnet build --no-restore
+        dotnet build ./src/Http/API/CVSystem.API.csproj --no-restore
 
     - name: Test backend
       run: |
