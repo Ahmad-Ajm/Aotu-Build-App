@@ -1,114 +1,74 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
     inputs:
-      featureKey:
-        description: "Feature key"
-        required: false
+      featureKey: 
+        description: 'The feature key to run CI for (e.g., FEAT-123)'
+        required: true
         type: string
-      attempt:
-        description: "Attempt number"
-        required: false
+      attempt: 
+        description: 'The attempt number for this CI run'
+        required: true
         type: string
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  NODE_VERSION: '18.x'
+  BACKEND_DIR: 'code/backend'
+  FRONTEND_DIR: 'code/frontend'
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    - uses: actions/checkout@v4
 
-      # =========================
-      # Backend (.NET / ABP)
-      # =========================
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Detect .NET entry (sln/csproj)
-        id: dotnet_detect
-        working-directory: code/backend
-        shell: bash
-        run: |
-          set -e
-          SLN=$(find . -maxdepth 4 -name "*.sln" | head -n 1 || true)
-          if [ -n "$SLN" ]; then
-            echo "path=$SLN" >> $GITHUB_OUTPUT
-            echo "type=sln"  >> $GITHUB_OUTPUT
-            exit 0
-          fi
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.BACKEND_DIR }}
 
-          CSPROJ=$(find . -maxdepth 6 -name "*.csproj" | head -n 1 || true)
-          if [ -n "$CSPROJ" ]; then
-            echo "path=$CSPROJ" >> $GITHUB_OUTPUT
-            echo "type=csproj"  >> $GITHUB_OUTPUT
-            exit 0
-          fi
+    - name: Build backend
+      run: dotnet build ${{ env.BACKEND_DIR }} --no-restore
 
-          echo "type=none" >> $GITHUB_OUTPUT
+    - name: Test backend
+      run: dotnet test ${{ env.BACKEND_DIR }} --no-build --verbosity normal
 
-      - name: Restore backend
-        if: steps.dotnet_detect.outputs.type != 'none'
-        working-directory: code/backend
-        run: dotnet restore "${{ steps.dotnet_detect.outputs.path }}"
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build backend
-        if: steps.dotnet_detect.outputs.type != 'none'
-        working-directory: code/backend
-        run: dotnet build "${{ steps.dotnet_detect.outputs.path }}" -c Release --no-restore
+    - name: Install frontend dependencies
+      run: npm ci
+      working-directory: ${{ env.FRONTEND_DIR }}
 
-      - name: Test backend (if any test projects exist)
-        if: steps.dotnet_detect.outputs.type != 'none'
-        working-directory: code/backend
-        shell: bash
-        run: |
-          set -e
-          TESTPROJ=$(find . -maxdepth 8 -name "*Test*.csproj" -o -name "*Tests*.csproj" | head -n 1 || true)
-          if [ -n "$TESTPROJ" ]; then
-            dotnet test -c Release --no-build
-          else
-            echo "No test projects found. Skipping dotnet test."
-          fi
+    - name: Build frontend
+      run: npm run build
+      working-directory: ${{ env.FRONTEND_DIR }}
 
-      # =========================
-      # Frontend (Angular)
-      # =========================
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+    - name: Update progress report
+      run: |
+        FEATURE_KEY="${{ github.event.inputs.featureKey }}"
+        ATTEMPT="${{ github.event.inputs.attempt }}"
+        REPORT_FILE="psec-kit-file/${{ github.event.inputs.featureKey }}/PROGRESS_REPORT.md"
 
-      - name: Install frontend dependencies
-        working-directory: code/frontend
-        shell: bash
-        run: |
-          set -e
-          if [ ! -f package.json ]; then
-            echo "No package.json in code/frontend. Skipping frontend."
-            exit 0
-          fi
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        if [ -f "$REPORT_FILE" ]; then
+          echo "Updating progress report for $FEATURE_KEY, Attempt $ATTEMPT..."
+          # Placeholder for actual update logic. For now, just append a line.
+          echo "- CI Run for Attempt $ATTEMPT: SUCCESS" >> "$REPORT_FILE"
+        else
+          echo "Progress report file not found at $REPORT_FILE. Skipping update."
+        fi
+      shell: bash
 
-      - name: Build frontend
-        working-directory: code/frontend
-        shell: bash
-        run: |
-          set -e
-          if [ ! -f package.json ]; then
-            echo "No package.json in code/frontend. Skipping frontend build."
-            exit 0
-          fi
-          npm run build
+  # Optional: Add deploy job here if needed, but not part of this task.
