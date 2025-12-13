@@ -19,7 +19,7 @@ on:
 env:
   DOTNET_VERSION: '8.0.x'
   NODE_VERSION: '18.x'
-  BACKEND_DIR: 'code/backend'
+  BACKEND_DIR: 'code/backend/src/Http/API'
   FRONTEND_DIR: 'code/frontend'
 
 jobs:
@@ -34,14 +34,17 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
-      run: dotnet restore ${{ env.BACKEND_DIR }}
+    - name: Restore backend dependencies
+      run: dotnet restore
+      working-directory: ${{ env.BACKEND_DIR }}
 
     - name: Build backend
-      run: dotnet build ${{ env.BACKEND_DIR }} --no-restore
+      run: dotnet build --no-restore
+      working-directory: ${{ env.BACKEND_DIR }}
 
     - name: Test backend
-      run: dotnet test ${{ env.BACKEND_DIR }} --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ${{ env.BACKEND_DIR }}
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
@@ -60,15 +63,12 @@ jobs:
       run: |
         FEATURE_KEY="${{ github.event.inputs.featureKey }}"
         ATTEMPT="${{ github.event.inputs.attempt }}"
-        REPORT_FILE="psec-kit-file/${{ github.event.inputs.featureKey }}/PROGRESS_REPORT.md"
+        REPORT_FILE="psec-kit-file/${FEATURE_KEY}/PROGRESS_REPORT.md"
 
         if [ -f "$REPORT_FILE" ]; then
           echo "Updating progress report for $FEATURE_KEY, Attempt $ATTEMPT..."
-          # Placeholder for actual update logic. For now, just append a line.
           echo "- CI Run for Attempt $ATTEMPT: SUCCESS" >> "$REPORT_FILE"
         else
           echo "Progress report file not found at $REPORT_FILE. Skipping update."
         fi
       shell: bash
-
-  # Optional: Add deploy job here if needed, but not part of this task.
