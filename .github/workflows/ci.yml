@@ -37,17 +37,17 @@ jobs:
     - name: Restore backend dependencies
       run: |
         cd ${{ env.BACKEND_DIR }}
-        dotnet restore ./src/Http/API/CVSystem.API.csproj
+        dotnet restore ./CVSystem.sln
 
     - name: Build backend
       run: |
         cd ${{ env.BACKEND_DIR }}
-        dotnet build ./src/Http/API/CVSystem.API.csproj --no-restore
+        dotnet build ./CVSystem.sln --no-restore
 
     - name: Test backend
       run: |
         cd ${{ env.BACKEND_DIR }}
-        dotnet test --no-build --verbosity normal || echo "No backend tests found, skipping."
+        dotnet test ./CVSystem.sln --no-build --verbosity normal || echo "No backend tests found, skipping."
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
