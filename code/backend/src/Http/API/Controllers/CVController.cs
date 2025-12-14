@@ -35,7 +35,7 @@ namespace CVSystem.Http.API.Controllers
 
         // PUT: api/app/cv/{id}
         [HttpPut("{id}")]
-        public async Task<ActionResult<CVDto>> UpdateAsync(Guid id, [FromBody] CreateCVDto input)
+        public async Task<ActionResult<CVDto>> UpdateAsync(Guid id, [FromBody] UpdateCVDto input)
         {
             if (!ModelState.IsValid)
             {
