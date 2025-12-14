@@ -1,5 +1,5 @@
 # Progress Report
 
-## Current Feature: FEAT-CV-CREATION
+## Current Feature: FEAT-USER-REGISTRATION
 - Status: In Progress
-- Notes: Initial setup for CV Creation feature. Repository currently contains only a placeholder `code/test.md`. Next steps: design and scaffold minimal backend/frontend structure for CV feature according to SpecKit.
+- Notes: Initial backend solution placeholder created in `code/backend/CVSystem.sln`. Next steps: create actual .NET projects (API, Domain, Infrastructure) for user registration per SpecKit.
