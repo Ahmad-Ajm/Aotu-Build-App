@@ -32,8 +32,8 @@ public class CVSystemDbContext : DbContext
             b.Property(x => x.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             b.HasOne(x => x.Profile)
-             .WithOne(x => x.User)
-             .HasForeignKey<UserProfile>(x => x.UserId);
+                .WithOne(x => x.User)
+                .HasForeignKey<UserProfile>(x => x.UserId);
         });
 
         modelBuilder.Entity<UserProfile>(b =>
