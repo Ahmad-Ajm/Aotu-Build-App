@@ -2,7 +2,7 @@
 
 ## Current Feature: FEAT-USER-REGISTRATION
 - Status: In Progress
-- Notes: Working on backend setup and user registration/login infrastructure under `code/backend`.
+- Notes: Working on backend setup and user registration/authentication structure under `code/backend`.
 
 ## Backend
 - Solution: `code/backend/CVSystem.sln` (placeholder, will be expanded with real projects).
