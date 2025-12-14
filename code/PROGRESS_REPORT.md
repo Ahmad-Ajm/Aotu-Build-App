@@ -1,24 +1,27 @@
-# تقدم المشروع - FEAT-CV-CREATION
+# تقدم الميزة FEAT-CV-CREATION
 
-## ملخص عام
-- الميزة الحالية: FEAT-CV-CREATION (إنشاء السيرة الذاتية)
-- الحالة العامة: In Progress
-- آخر محاولة CI: 2 (ما زالت فاشلة بسبب مشكلة في مشروع backend `CVSystem.API.csproj`)
+## الحالة العامة
+- الحالة الحالية: In Progress
+- آخر محاولة CI: 1 (فاشلة – سيتم الإصلاح وإعادة التشغيل)
 
-## حالة CI
-- تم تشغيل CI عبر workflow_dispatch للميزة FEAT-CV-CREATION بمحاولة 1.
-- فشل CI في خطوة: "Restore backend dependencies" بسبب عدم وجود ملف المشروع `code/backend/src/Http/API/CVSystem.API.csproj`.
-- تم إنشاء الملف المفقود `CVSystem.API.csproj` في المسار الصحيح.
-- تم تشغيل CI مرة أخرى بمحاولة 2.
-- ما زال تقرير CI يشير لنفس الخطأ لمسار المشروع، مع نفس رقم الـ run، ما يرجح أن GitHub Actions يعرض نفس الـ run (قبل التعديل) في أداة الفحص الحالية.
+## ما تم إنجازه في هذه الجلسة
+- تحليل فشل CI المتعلق بالميزة FEAT-CV-CREATION.
+- مراجعة إعدادات CI في `.github/workflows/ci.yml` والتأكد من أن مسارات الـ backend/frontend صحيحة.
+- مراجعة ملفات:
+  - `code/backend/src/Http/API/Controllers/AccountController.cs`
+  - `code/backend/src/Http/API/Controllers/CVController.cs`
+  - `code/backend/src/Application/DTOs/CVDto.cs`
+- إنشاء ملف تقدم خاص بالميزة: `psec-kit-file/FEAT-CV-CREATION/PROGRESS.md`.
 
-## الأعمال المنجزة المتعلقة بالميزة
-- إعداد ملف مشروع للـ API في backend:
-  - `code/backend/src/Http/API/CVSystem.API.csproj` (جديد)
-- إنشاء ملف تقدم خاص بالميزة:
-  - `psec-kit-file/FEAT-CV-CREATION/PROGRESS_FEAT-CV-CREATION.md`
+## ملاحظات حول فشل CI الحالي
+- أخطاء التجميع الأساسية:
+  - `AccountController.cs`: خطأ `CS0246` يشير إلى أن مساحة الأسماء `Volo` غير معروفة في سياق المشروع الحالي.
+  - `CVController.cs`: عدة أخطاء `CS0246` لعدم العثور على بعض الـ DTOs أو المراجع (مثل `CVDto`, `ExportOptionsDto`, `CVStatisticsDto`, `PublicCVDto`) في الـ controller.
+- من خلال مراجعة الكود:
+  - مشروع الـ backend مبني حالياً كمشروع ASP.NET Core عادي مع طبقة Application/DTOs وخدمات، وليس مشروع ABP كامل، لذلك يجب إزالة/تعديل المراجع غير الضرورية لـ `Volo.Abp` في الـ controllers أو التأكد من إضافة الـ using/المراجع الصحيحة إن كانت مطلوبة فعلاً.
+  - DTOs الأساسية (`CVDto`, `CreateCVDto`, `PublicCVDto`) موجودة في `code/backend/src/Application/DTOs/` ويمكن إصلاح مراجعها في `CVController` بإضافة `using CVSystem.Application.DTOs;` أو ما يعادله.
 
-## الخطوات التالية المقترحة
-1. التأكد في الجلسة القادمة من أن CI يستعمل آخر commit فعلياً عبر تشغيل workflow جديد ومراقبة رقم الـ run.
-2. بعد تحقق نجاح CI، البدء بتنفيذ مهام الخدمة وواجهات البرمجة والواجهة الأمامية المتعلقة بإنشاء وتحرير الـ CV وفق المواصفات.
-3. تحديث ملفي التقدم (العام والخاص بالميزة) بعد كل مجموعة من التغييرات المهمة.
+## الخطوات التالية المخطط لها
+1. تعديل `AccountController.cs` لإزالة أو استبدال أي مراجع غير لازمة لـ `Volo` أو مساحات أسماء غير متوفرة ضمن المشروع.
+2. تعديل `CVController.cs` لإضافة الـ `using` الصحيح لـ DTOs، والتأكد من أن جميع الأنواع المشار إليها معرّفة في طبقة الـ Application أو إنشاء ما يلزم منها إن كانت مفقودة (مثل `ExportOptionsDto`, `CVStatisticsDto`).
+3. تشغيل CI من جديد بعد الإصلاحات (محاولة 2) والتأكد من نجاح الـ build قبل البدء بتنفيذ مهام جديدة من tasks.md الخاصة بالميزة.
