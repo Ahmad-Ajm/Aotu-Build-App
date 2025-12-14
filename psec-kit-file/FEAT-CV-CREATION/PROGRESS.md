@@ -2,16 +2,16 @@
 
 ## الحالة الحالية
 - الحالة: In Progress
-- آخر محاولة CI: Failed (attempt 2)
+- آخر محاولة CI: Failed (attempt 3)
 
 ## ملخص ما تم تنفيذه في هذه الجلسة
-- إصلاح أخطاء البناء في backend المتعلقة بالـ Controllers:
-  - إزالة الاعتمادية على ABP (Volo.*) من AccountController واستبدالها باعتماد على ASP.NET Core القياسي (ControllerBase, [ApiController], [Authorize]) وربطها بـ IUserService فقط.
-  - تبسيط CVController ليستخدم ASP.NET Core القياسي وربطه بخدمة ICVService و DTOs الحالية (CVDto, CreateCVDto, PublicCVDto).
-- إضافة DTOs مفقودة كانت تسبب أخطاء CS0246 في CI:
-  - ExportOptionsDto: لتمرير خيارات التصدير (القالب، اللغة، إدراج الصورة، البيانات الحساسة).
-  - CVStatisticsDto: لتمثيل إحصائيات السيرة الذاتية (عدد المشاهدات، التنزيلات، آخر مشاهدة).
-- تحديث تقرير التقدم العام `code/PROGRESS_REPORT.md` ليعكس هذه التغييرات ونتيجة CI الحالية.
+- إصلاحات متتابعة لأخطاء البناء في backend:
+  - استبدال AccountController القديم (المبني على ABP/Volo) بنسخة مبسطة تعتمد فقط على ASP.NET Core (`ControllerBase`) وواجهات الخدمات الحالية (`IUserService`, `UserDto`).
+  - استبدال CVController القديم (الممتلئ بمنطق ABP ونقاط نهاية كثيرة) بنسخة مبسطة تعتمد فقط على ASP.NET Core (`ControllerBase`) وخدمة `ICVService` و DTOs الحالية (`CVDto`, `CreateCVDto`, `PublicCVDto`).
+  - إضافة DTOs مفقودة سابقاً (`ExportOptionsDto`, `CVStatisticsDto`) لتلبية جزء من المتطلبات المستقبلية للتصدير والإحصائيات.
+- تحديث التقارير:
+  - تحديث `code/PROGRESS_REPORT.md` بعرض حالة CI (محاولة 3 فاشلة حتى الآن) وخطوات الإصلاح المنفذة.
+  - تحديث هذا الملف لعرض إنجازات هذه الجلسة وخطة الخطوة التالية.
 
 ## حالة المهام (من tasks.md)
 
@@ -34,7 +34,7 @@
 - [x] TASK-BACKEND-006: إنشاء خدمة CVService
 - [x] TASK-BACKEND-007: تنفيذ عمليات CRUD للسير الذاتية (ضمن CVService)
 - [x] TASK-BACKEND-008: إضافة التحقق من صحة البيانات (جزئياً)
-- [x] TASK-BACKEND-009: إنشاء واجهات برمجة تطبيقات RESTful (تم تبسيط AccountController وCVController وربطهما بالخدمات)
+- [x] TASK-BACKEND-009: إنشاء واجهات برمجة تطبيقات RESTful (تم الآن استبدال AccountController وCVController بنسخ ASP.NET Core بسيطة مترابطة مع الخدمات)
 - [ ] TASK-BACKEND-010: إضافة نظام الترخيص والتحكم في الوصول (جزئياً عبر [Authorize]، تحتاج لاحقاً لربط كامل مع هوية المستخدم والصلاحيات)
 
 ### 3. تطوير الواجهة الأمامية (Angular 17)
@@ -49,7 +49,7 @@
 - [x] TASK-FRONTEND-008: إنشاء مكون CV Preview Component
 - [x] TASK-FRONTEND-009: إضافة معاينة مباشرة للسيرة الذاتية (أساسية، تحتاج تحسينات لاحقاً)
 - [x] TASK-FRONTEND-010: إنشاء خدمة CVService في Angular
-- [x] TASK-FRONTEND-011: تكامل واجهة برمجة التطبيقات مع الخلفية (جزئياً، سيتحسن بعد استقرار الـ API)
+- [x] TASK-FRONTEND-011: تكامل واجهة برمجة التطبيقات مع الخلفية (جزئياً، سيتم مراجعته لاحقاً بعد استقرار الـ API)
 - [x] TASK-FRONTEND-012: إضافة التحقق من صحة النماذج (أساسي)
 - [ ] TASK-FRONTEND-013: تصميم واجهة اختيار القوالب (لم تكتمل بعد)
 - [ ] TASK-FRONTEND-014: إضافة تخصيص الألوان والخطوط
@@ -81,10 +81,9 @@
 - [ ] TASK-DOCUMENTATION-003: كتابة دليل المطور
 
 ## الخطة للجلسة/الخطوة القادمة
-- إعادة تشغيل CI (attempt 3) للتأكد من أن إصلاحات AccountController وCVController و DTOs الجديدة أزالت أخطاء البناء في backend.
+- إعادة تشغيل CI للتحقق من أن استبدال AccountController وCVController بكود ASP.NET Core نظيف أزال أخطاء CS0246 المتعلقة بـ Volo.* و DTOs داخل الـ Controllers.
 - في حال نجاح CI:
-  - توسيع CVController بإضافة نقاط النهاية الخاصة بالتصدير (PDF/DOCX) والمعاينة والإحصائيات، وربطها بتنفيذات داخل CVService وفق المواصفات.
-  - مراجعة واجهة Angular وربطها بالنقاط الجديدة (التصدير، الإحصائيات، القوالب).
-- في حال فشل CI:
-  - قراءة الـ logs وتحديد سبب الفشل الجديد بدقة.
-  - إصلاح المشاكل ضمن حد المحاولات المسموح بها.
+  - البدء في توسيع CVController وCVService لدعم المعاينة، التصدير (PDF/DOCX)، الإحصائيات، وإدارة القوالب كما هو موصوف في SpecKit.
+  - مراجعة طبقة Angular لربط مكونات CV (الإنشاء، القائمة، المعاينة) بنقاط النهاية الجديدة.
+- في حال استمرار فشل CI (مع الوصول لحد ثلاث محاولات):
+  - سيتم توثيق الميزة كـ Blocked في ملف التقدم العام مع الإشارة إلى سبب الفشل المطلوب تدخّل يدوي.
