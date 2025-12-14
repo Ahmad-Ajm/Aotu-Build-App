@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>CVSystem</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="8.0.0" />
-    <PackageReference Include="Volo.Abp.Users.Application.Contracts" Version="8.0.0" />
+    <PackageReference Include="Volo.Abp.Application" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
