@@ -8,8 +8,8 @@ using CVSystem.Application.DTOs;
 
 namespace CVSystem.Http.API.Controllers
 {
-    [Route("api/app/cv")]
     [ApiController]
+    [Route("api/app/cv")]
     [Authorize]
     public class CVController : ControllerBase
     {
@@ -24,6 +24,11 @@ namespace CVSystem.Http.API.Controllers
         [HttpPost]
         public async Task<ActionResult<CVDto>> CreateAsync([FromBody] CreateCVDto input)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _cvService.CreateCVAsync(input);
             return Ok(result);
         }
@@ -32,6 +37,11 @@ namespace CVSystem.Http.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<CVDto>> UpdateAsync(Guid id, [FromBody] CreateCVDto input)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _cvService.UpdateCVAsync(id, input);
             if (result == null)
             {
