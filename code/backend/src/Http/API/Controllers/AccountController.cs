@@ -20,13 +20,18 @@ namespace CVSystem.Http.API.Controllers
             _userService = userService;
         }
 
+        // TODO: Replace this with actual authenticated user id from claims
+        private Guid GetCurrentUserId()
+        {
+            // For now, throw to avoid silent bugs
+            throw new NotImplementedException("GetCurrentUserId should be implemented using authenticated user claims.");
+        }
+
         // GET: api/account/profile
         [HttpGet("profile")]
         public async Task<ActionResult<UserDto>> GetProfileAsync()
         {
-            // TODO: Replace with actual authenticated user id from claims
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-
+            var userId = GetCurrentUserId();
             var result = await _userService.GetUserByIdAsync(userId);
             if (result == null)
             {
@@ -45,10 +50,13 @@ namespace CVSystem.Http.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            // TODO: Replace with actual authenticated user id from claims
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-
+            var userId = GetCurrentUserId();
             var result = await _userService.UpdateUserAsync(userId, input);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
@@ -56,9 +64,7 @@ namespace CVSystem.Http.API.Controllers
         [HttpGet("user-profile")]
         public async Task<ActionResult<UserProfileDto>> GetUserProfileAsync()
         {
-            // TODO: Replace with actual authenticated user id from claims
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-
+            var userId = GetCurrentUserId();
             var result = await _userService.GetUserProfileAsync(userId);
             if (result == null)
             {
@@ -77,10 +83,13 @@ namespace CVSystem.Http.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            // TODO: Replace with actual authenticated user id from claims
-            var userId = Guid.Parse("00000000-0000-0000-0000-000000000001");
-
+            var userId = GetCurrentUserId();
             var result = await _userService.UpdateUserProfileAsync(userId, input);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
