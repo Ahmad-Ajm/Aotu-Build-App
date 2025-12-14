@@ -116,21 +116,21 @@ namespace CVSystem.Http.API.Controllers
             return Ok(result);
         }
     }
-}
 
-public class UpdateUserDto
-{
-    public string FullName { get; set; }
-    public string Email { get; set; }
-    public string UserName { get; set; }
-    public DateTime? DateOfBirth { get; set; }
-    public string Nationality { get; set; }
-}
+    public class UpdateUserDto
+    {
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string Nationality { get; set; }
+    }
 
-public class UpdateUserProfileDto
-{
-    public string PhoneNumber { get; set; }
-    public string Address { get; set; }
-    public string ProfileImageUrl { get; set; }
-    public string Bio { get; set; }
+    public class UpdateUserProfileDto
+    {
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public string ProfileImageUrl { get; set; }
+        public string Bio { get; set; }
+    }
 }
