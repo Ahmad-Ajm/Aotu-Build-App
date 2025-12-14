@@ -1,5 +1,5 @@
 # Progress Report
 
-## Current Feature: FEAT-USER-REGISTRATION
+## Current Feature: FEAT-CV-CREATION
 - Status: In Progress
-- Notes: Initial backend solution placeholder created in `code/backend/CVSystem.sln`. Next steps: create actual .NET projects (API, Domain, Infrastructure) for user registration per SpecKit.
+- Notes: Initial setup for CV creation feature. Backend solution placeholder exists in `code/backend/CVSystem.sln`. Next steps: scaffold backend projects (API, Domain, Infrastructure) and start implementing CV entities and services per SpecKit.
