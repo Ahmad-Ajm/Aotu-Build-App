@@ -1,12 +1,14 @@
-# Progress Report
+# Global Progress Report
 
-## Current Feature: FEAT-CV-CREATION
-- Status: In Progress
-- Notes: Started implementing CV feature backend structure and recorded feature-specific progress file.
+## Features
 
-## Backend
-- Solution: `code/backend/CVSystem.sln`
-- Next steps: Add CV-related domain entities, DbContext mappings, and HTTP API controllers according to SpecKit for FEAT-CV-CREATION.
+### FEAT-CV-CREATION
+- Backend domain model for CVs created (`CV` entity, DbContext configuration).
+- Application and Application.Contracts layers initialized for CVs.
+- CRUD application service for CVs implemented (no REST controller yet).
 
-## Frontend
-- Not started yet for this feature. Will be addressed after backend API is stable.
+### FEAT-USER-REGISTRATION
+- Existing user and user profile domain models present.
+
+## Notes
+- Next steps for FEAT-CV-CREATION: expose REST API endpoints, implement authorization policies, and start frontend Angular components for CV creation and preview.
