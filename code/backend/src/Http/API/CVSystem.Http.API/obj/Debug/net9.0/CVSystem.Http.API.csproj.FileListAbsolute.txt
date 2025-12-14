@@ -1,0 +1,11 @@
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\bin\Debug\net9.0\CVSystem.Http.API.deps.json
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\bin\Debug\net9.0\CVSystem.Http.API.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\bin\Debug\net9.0\CVSystem.Http.API.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.GeneratedMSBuildEditorConfig.editorconfig
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.AssemblyInfoInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.AssemblyInfo.cs
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.csproj.CoreCompileInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\refint\CVSystem.Http.API.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\CVSystem.Http.API.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Http\API\CVSystem.Http.API\obj\Debug\net9.0\ref\CVSystem.Http.API.dll

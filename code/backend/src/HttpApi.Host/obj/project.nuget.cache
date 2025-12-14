@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "nos194C2peY=",
+  "success": true,
+  "projectFilePath": "D:\\Ahmad-File\\Download\\Compressed\\Aotu-Build-App-main\\Aotu-Build-App-main\\code\\backend\\src\\HttpApi.Host\\CVSystem.HttpApi.Host.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Syrian Technology\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.11\\microsoft.aspnetcore.openapi.9.0.11.nupkg.sha512",
+    "C:\\Users\\Syrian Technology\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
