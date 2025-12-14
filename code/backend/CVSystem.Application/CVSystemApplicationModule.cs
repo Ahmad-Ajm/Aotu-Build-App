@@ -1,23 +1,23 @@
 using Volo.Abp.Application;
-using Volo.Abp.Modularity;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.Modularity;
 
-namespace CVSystem.Application
+namespace CVSystem.Application;
+
+[DependsOn(
+    typeof(AbpDddApplicationModule),
+    typeof(AbpAutoMapperModule),
+    typeof(CVSystemApplicationContractsModule)
+)]
+public class CVSystemApplicationModule : AbpModule
 {
-    [DependsOn(
-        typeof(CVSystemDomainModule),
-        typeof(CVSystemApplicationContractsModule),
-        typeof(AbpDddApplicationModule),
-        typeof(AbpAutoMapperModule)
-        )]
-    public class CVSystemApplicationModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void Configure(ServiceConfigurationContext context)
+        context.Services.AddAutoMapperObjectMapper<CVSystemApplicationModule>();
+
+        Configure<AbpAutoMapperOptions>(options =>
         {
-            Configure<AbpAutoMapperOptions>(options =>
-            {
-                options.AddMaps<CVSystemApplicationAutoMapperProfile>(validate: true);
-            });
-        }
+            options.AddMaps<CVSystemApplicationModule>();
+        });
     }
 }
