@@ -1,0 +1,11 @@
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\bin\Debug\net9.0\CVSystem.EntityFrameworkCore.deps.json
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\bin\Debug\net9.0\CVSystem.EntityFrameworkCore.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\bin\Debug\net9.0\CVSystem.EntityFrameworkCore.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.GeneratedMSBuildEditorConfig.editorconfig
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.AssemblyInfoInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.AssemblyInfo.cs
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.csproj.CoreCompileInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\refint\CVSystem.EntityFrameworkCore.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\CVSystem.EntityFrameworkCore.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\EntityFrameworkCore\CVSystem.EntityFrameworkCore\obj\Debug\net9.0\ref\CVSystem.EntityFrameworkCore.dll

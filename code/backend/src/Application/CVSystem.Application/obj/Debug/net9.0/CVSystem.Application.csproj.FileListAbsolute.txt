@@ -1,0 +1,11 @@
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\bin\Debug\net9.0\CVSystem.Application.deps.json
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\bin\Debug\net9.0\CVSystem.Application.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\bin\Debug\net9.0\CVSystem.Application.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.AssemblyInfoInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.AssemblyInfo.cs
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.csproj.CoreCompileInputs.cache
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\refint\CVSystem.Application.dll
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\CVSystem.Application.pdb
+D:\Ahmad-File\Download\Compressed\Aotu-Build-App-main\Aotu-Build-App-main\code\backend\src\Application\CVSystem.Application\obj\Debug\net9.0\ref\CVSystem.Application.dll
