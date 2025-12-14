@@ -1,10 +1,10 @@
 using System;
-using Volo.Abp.Application.Dtos;
 
 namespace CVSystem.Application.DTOs
 {
-    public class UpdateCVDto : FullAuditedEntityDto<Guid>
+    public class UpdateCVDto
     {
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public string Title { get; set; }
         public string PersonalInfo { get; set; }
