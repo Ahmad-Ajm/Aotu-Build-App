@@ -1,0 +1,153 @@
+.login-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;
+}
+
+.login-card {
+  max-width: 480px;
+  width: 100%;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.login-subtitle {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.remember-checkbox {
+  margin-right: 0;
+}
+
+.forgot-password-btn {
+  padding: 0;
+  min-width: auto;
+}
+
+.login-button {
+  margin-top: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgot-password-section {
+  margin-top: 8px;
+}
+
+.forgot-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.forgot-description {
+  margin: 0 0 16px;
+  color: #666;
+  font-size: 14px;
+}
+
+.forgot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forgot-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.social-login {
+  margin-top: 24px;
+}
+
+.divider {
+  margin: 8px 0 16px;
+}
+
+.divider-text {
+  padding: 0 8px;
+  color: #888;
+  font-size: 13px;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-btn {
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.google-btn mat-icon,
+.facebook-btn mat-icon {
+  font-size: 18px;
+}
+
+.social-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.login-actions {
+  justify-content: center;
+}
+
+.register-link p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.login-info {
+  max-width: 360px;
+  width: 100%;
+}
+
+.info-card {
+  height: 100%;
+}
+
+@media (max-width: 960px) {
+  .login-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .login-info {
+    max-width: 100%;
+  }
+}
+
+

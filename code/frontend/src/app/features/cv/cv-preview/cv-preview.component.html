@@ -1,0 +1,156 @@
+<div class="cv-preview-container" [ngClass]="'template-' + template">
+  <div class="cv-preview" *ngIf="cvData">
+    <!-- Professional Template -->
+    <div class="cv-template professional" *ngIf="template === 'professional'">
+      <!-- Header -->
+      <div class="cv-header">
+        <div class="personal-info">
+          <h1 class="full-name">{{ personalInfo?.fullName || 'الاسم الكامل' }}</h1>
+          <div class="contact-info">
+            <div class="contact-item" *ngIf="personalInfo?.email">
+              <mat-icon>email</mat-icon>
+              <span>{{ personalInfo?.email }}</span>
+            </div>
+            <div class="contact-item" *ngIf="personalInfo?.phoneNumber">
+              <mat-icon>phone</mat-icon>
+              <span>{{ personalInfo?.phoneNumber }}</span>
+            </div>
+            <div class="contact-item" *ngIf="personalInfo?.linkedIn">
+              <mat-icon>link</mat-icon>
+              <span>{{ personalInfo?.linkedIn }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Section -->
+      <div class="cv-section" *ngIf="personalInfo?.summary">
+        <h2 class="section-title">نبذة عني</h2>
+        <div class="section-content">
+          <p>{{ personalInfo?.summary }}</p>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="cv-section" *ngIf="experience.length > 0">
+        <h2 class="section-title">الخبرات العملية</h2>
+        <div class="section-content">
+          <div class="experience-item" *ngFor="let exp of sortByOrder(experience)">
+            <div class="experience-header">
+              <h3 class="job-title">{{ exp.jobTitle }}</h3>
+              <span class="company">{{ exp.company }}</span>
+              <span class="duration">
+                {{ formatDate(exp.startDate) }} - {{ exp.endDate ? formatDate(exp.endDate) : 'حتى الآن' }}
+                ({{ getDuration(exp.startDate, exp.endDate) }})
+              </span>
+            </div>
+            <div class="experience-details">
+              <p class="description" *ngIf="exp.description">{{ exp.description }}</p>
+              <div class="achievements" *ngIf="exp.achievements">
+                <h4>الإنجازات:</h4>
+                <p>{{ exp.achievements }}</p>
+              </div>
+              <div class="skills-used" *ngIf="exp.skillsUsed">
+                <h4>المهارات المستخدمة:</h4>
+                <p>{{ exp.skillsUsed }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education Section -->
+      <div class="cv-section" *ngIf="education.length > 0">
+        <h2 class="section-title">التعليم والمؤهلات</h2>
+        <div class="section-content">
+          <div class="education-item" *ngFor="let edu of sortByOrder(education)">
+            <div class="education-header">
+              <h3 class="degree">{{ edu.degree }}</h3>
+              <span class="institution">{{ edu.institution }}</span>
+              <span class="duration">
+                {{ formatDate(edu.startDate) }} - {{ edu.endDate ? formatDate(edu.endDate) : 'حتى الآن' }}
+              </span>
+            </div>
+            <div class="education-details">
+              <p class="field-of-study" *ngIf="edu.fieldOfStudy">التخصص: {{ edu.fieldOfStudy }}</p>
+              <p class="gpa" *ngIf="edu.gpa">المعدل: {{ edu.gpa }}/{{ edu.gpaScale || '4.0' }}</p>
+              <p class="description" *ngIf="edu.description">{{ edu.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="cv-section" *ngIf="skills.length > 0">
+        <h2 class="section-title">المهارات</h2>
+        <div class="section-content">
+          <!-- Featured Skills -->
+          <div class="featured-skills" *ngIf="getFeaturedSkills().length > 0">
+            <h3>المهارات الرئيسية</h3>
+            <div class="skills-grid">
+              <div class="skill-item" *ngFor="let skill of getFeaturedSkills()">
+                <div class="skill-info">
+                  <span class="skill-name">{{ skill.name }}</span>
+                  <span class="skill-level">{{ getSkillLevelLabel(skill.level) }}</span>
+                </div>
+                <div class="skill-years" *ngIf="skill.yearsOfExperience">
+                  {{ skill.yearsOfExperience }} سنة خبرة
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other Skills -->
+          <div class="other-skills" *ngIf="getOtherSkills().length > 0">
+            <h3>مهارات أخرى</h3>
+            <div class="skills-chips">
+              <mat-chip *ngFor="let skill of getOtherSkills()">
+                {{ skill.name }}
+              </mat-chip>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Languages Section -->
+      <div class="cv-section" *ngIf="personalInfo?.languages">
+        <h2 class="section-title">اللغات</h2>
+        <div class="section-content">
+          <div class="languages-list">
+            <div class="language-item" *ngFor="let lang of (personalInfo?.languages?.split(',') || [])">
+              <span class="language-name">{{ lang.trim() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Creative Template -->
+    <div class="cv-template creative" *ngIf="template === 'creative'">
+      <!-- Creative template implementation -->
+      <div class="creative-header">
+        <div class="creative-name">
+          <h1>{{ personalInfo?.fullName || 'الاسم الكامل' }}</h1>
+          <p class="creative-title">{{ personalInfo?.title || 'المسمى الوظيفي' }}</p>
+        </div>
+      </div>
+      <!-- Similar structure with creative styling -->
+    </div>
+
+    <!-- Simple Template -->
+    <div class="cv-template simple" *ngIf="template === 'simple'">
+      <!-- Simple template implementation -->
+      <div class="simple-header">
+        <h1>{{ personalInfo?.fullName || 'الاسم الكامل' }}</h1>
+      </div>
+      <!-- Similar structure with minimal styling -->
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!cvData">
+    <mat-icon>description</mat-icon>
+    <h3>لا توجد بيانات لعرضها</h3>
+    <p>ابدأ بملء المعلومات لعرض معاينة السيرة الذاتية</p>
+  </div>
+</div>

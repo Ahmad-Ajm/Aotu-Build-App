@@ -1,0 +1,111 @@
+<div class="profile-container" *ngIf="!isLoading; else loadingTpl">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar">
+        <img [src]="getProfileImage()" alt="Avatar">
+      </div>
+      <mat-card-title>{{ profileForm.get('fullName')?.value || 'الملف الشخصي' }}</mat-card-title>
+      <mat-card-subtitle>{{ profileForm.get('email')?.value }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-tab-group [selectedIndex]="activeTab === 'basic' ? 0 : 1" (selectedIndexChange)="setActiveTab($event === 0 ? 'basic' : 'profile')">
+        <mat-tab label="البيانات الأساسية">
+          <form [formGroup]="profileForm" class="form-grid" (ngSubmit)="onBasicInfoSubmit()">
+            <mat-form-field appearance="outline">
+              <mat-label>الاسم الكامل</mat-label>
+              <input matInput formControlName="fullName">
+              <mat-error *ngIf="hasError('fullName')">
+                {{ getErrorMessage('fullName') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>البريد الإلكتروني</mat-label>
+              <input matInput formControlName="email" type="email">
+              <mat-error *ngIf="hasError('email')">
+                {{ getErrorMessage('email') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>اسم المستخدم</mat-label>
+              <input matInput formControlName="userName">
+              <mat-error *ngIf="hasError('userName')">
+                {{ getErrorMessage('userName') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>تاريخ الميلاد</mat-label>
+              <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+              <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>الجنسية</mat-label>
+              <input matInput formControlName="nationality">
+            </mat-form-field>
+
+            <div class="full-row actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || isLoading">
+                حفظ البيانات الأساسية
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+        <mat-tab label="الملف الشخصي">
+          <form [formGroup]="userProfileForm" class="form-grid" (ngSubmit)="onProfileSubmit()">
+            <mat-form-field appearance="outline">
+              <mat-label>رقم الجوال</mat-label>
+              <input matInput formControlName="phoneNumber">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-row">
+              <mat-label>العنوان</mat-label>
+              <textarea matInput formControlName="address" rows="2"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-row">
+              <mat-label>رابط صورة الملف الشخصي</mat-label>
+              <input matInput formControlName="profileImageUrl">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-row">
+              <mat-label>نبذة مختصرة</mat-label>
+              <textarea matInput formControlName="bio" rows="3"></textarea>
+            </mat-form-field>
+
+            <div class="full-row actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="userProfileForm.invalid || isLoading">
+                حفظ الملف الشخصي
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+
+    <mat-card-actions class="meta-info" *ngIf="user">
+      <div>
+        <strong>تاريخ إنشاء الحساب:</strong>
+        <span>{{ getFormattedCreationTime() }}</span>
+      </div>
+      <div>
+        <strong>آخر تسجيل دخول:</strong>
+        <span>{{ getFormattedLastLogin() }}</span>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    <mat-spinner diameter="48"></mat-spinner>
+    <p>جاري تحميل بيانات الملف الشخصي...</p>
+  </div>
+</ng-template>
+
+

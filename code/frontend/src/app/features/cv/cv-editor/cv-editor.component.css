@@ -1,0 +1,74 @@
+.cv-editor-container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.cv-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cv-editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+  gap: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.full-row {
+  grid-column: 1 / -1;
+}
+
+.experience-item,
+.skill-item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.experience-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.cv-preview-section {
+  position: sticky;
+  top: 16px;
+  align-self: flex-start;
+}
+
+@media (max-width: 960px) {
+  .cv-editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-preview-section {
+    position: static;
+  }
+}
+
+

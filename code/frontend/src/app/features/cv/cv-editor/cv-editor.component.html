@@ -1,0 +1,168 @@
+<div class="cv-editor-container" [formGroup]="cvForm">
+  <div class="cv-editor-header">
+    <h1>{{ mode === 'create' ? 'إنشاء سيرة ذاتية جديدة' : 'تحرير السيرة الذاتية' }}</h1>
+    <div class="header-actions">
+      <button mat-stroked-button color="primary" (click)="exportToPDF()" [disabled]="!cvId">
+        <mat-icon>picture_as_pdf</mat-icon>
+        تصدير PDF
+      </button>
+      <button mat-stroked-button color="primary" (click)="exportToWord()" [disabled]="!cvId">
+        <mat-icon>description</mat-icon>
+        تصدير Word
+      </button>
+      <button mat-raised-button color="primary" (click)="saveCV()" [disabled]="cvForm.invalid || saving">
+        <mat-icon>save</mat-icon>
+        حفظ
+      </button>
+    </div>
+  </div>
+
+  <div class="cv-editor-grid">
+    <div class="cv-form-section">
+      <mat-card>
+        <mat-card-title>البيانات الأساسية</mat-card-title>
+        <mat-card-content>
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-row">
+              <mat-label>عنوان السيرة الذاتية</mat-label>
+              <input matInput formControlName="title">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>القالب</mat-label>
+              <mat-select formControlName="template">
+                <mat-option *ngFor="let t of templates" [value]="t.value">
+                  {{ t.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="isPublic">
+              جعل السيرة الذاتية عامة
+            </mat-checkbox>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-title>المعلومات الشخصية</mat-card-title>
+        <mat-card-content [formGroup]="personalInfoForm">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>الاسم الكامل</mat-label>
+              <input matInput formControlName="fullName">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>البريد الإلكتروني</mat-label>
+              <input matInput formControlName="email" type="email">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>رقم الجوال</mat-label>
+              <input matInput formControlName="phoneNumber">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-row">
+              <mat-label>العنوان</mat-label>
+              <textarea matInput formControlName="address" rows="2"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-title>الخبرات العملية</mat-card-title>
+        <mat-card-content>
+          <div formArrayName="experience">
+            <div *ngFor="let expCtrl of experienceControls; let i = index" [formGroupName]="i" class="experience-item">
+              <div class="experience-header">
+                <h3>خبرة #{{ i + 1 }}</h3>
+                <div class="experience-actions">
+                  <button mat-icon-button (click)="moveExperienceUp(i)" [disabled]="i === 0">
+                    <mat-icon>arrow_upward</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="moveExperienceDown(i)" [disabled]="i === experienceControls.length - 1">
+                    <mat-icon>arrow_downward</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="removeExperience(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>المسمى الوظيفي</mat-label>
+                  <input matInput formControlName="jobTitle">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>الشركة</mat-label>
+                  <input matInput formControlName="company">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <button mat-stroked-button color="primary" (click)="addExperience()">
+            <mat-icon>add</mat-icon>
+            إضافة خبرة
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-title>المهارات</mat-card-title>
+        <mat-card-content>
+          <div formArrayName="skills">
+            <div *ngFor="let skillCtrl of skillsControls; let i = index" [formGroupName]="i" class="skill-item">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>المهارة</mat-label>
+                  <input matInput formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>المستوى</mat-label>
+                  <mat-select formControlName="level">
+                    <mat-option *ngFor="let lvl of skillLevels" [value]="lvl.value">
+                      {{ lvl.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <button mat-stroked-button color="primary" (click)="addSkill()">
+            <mat-icon>add</mat-icon>
+            إضافة مهارة
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="cv-preview-section" *ngIf="cvForm.valid">
+      <mat-card>
+        <mat-card-title>معاينة سريعة</mat-card-title>
+        <mat-card-content>
+          <h2>{{ cvForm.value.title }}</h2>
+          <p>{{ personalInfoForm.value.fullName }} - {{ personalInfoForm.value.email }}</p>
+          <h3>الخبرات</h3>
+          <ul>
+            <li *ngFor="let expCtrl of experienceControls">
+              {{ expCtrl.value.jobTitle }} - {{ expCtrl.value.company }}
+            </li>
+          </ul>
+          <h3>المهارات</h3>
+          <ul>
+            <li *ngFor="let skillCtrl of skillsControls">
+              {{ skillCtrl.value.name }}
+            </li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+
