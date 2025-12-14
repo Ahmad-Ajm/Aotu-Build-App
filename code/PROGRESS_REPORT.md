@@ -1,10 +1,9 @@
 # Project Progress Report
 
-- Current Feature: FEAT-CV-CREATION
+- Current Feature: FEAT-USER-REGISTRATION
 - Status: In Progress
-- Last CI Result: Failed (attempt 2 for FEAT-CV-CREATION)
+- Last CI Result: Failed (attempt 1 for FEAT-USER-REGISTRATION)
 - Notes:
-  - Fixed backend build errors by removing ABP (Volo.*) dependencies from AccountController and refactoring it to use ASP.NET Core ControllerBase and IUserService.
-  - Simplified CVController to use ASP.NET Core attributes and wired it to existing ICVService and DTOs (CVDto, CreateCVDto, PublicCVDto).
-  - Added missing DTOs: ExportOptionsDto and CVStatisticsDto to align with spec and avoid CS0246 errors.
-  - Next: Re-run CI and then continue implementing remaining CV feature endpoints and behaviors as per SpecKit.
+  - Fixed backend build errors by refactoring AccountController to remove ABP (Volo.*) dependencies and use ASP.NET Core MVC ControllerBase with IUserService.
+  - Updated CVController to include proper ASP.NET Core and DTO namespaces and aligned method signatures with existing ICVService and DTO types (CVDto, CreateCVDto, PublicCVDto).
+  - Next: Re-run CI for FEAT-USER-REGISTRATION and continue implementing remaining user registration and authentication behaviors according to SpecKit.
