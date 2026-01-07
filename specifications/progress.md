@@ -8,8 +8,8 @@
 
 > **حالة الملفات**: `NotStarted`, `InProgress`, `Done`, `Skipped`
 
-| clarify | plan | specify | tasks | الميزة في SpecKit | ID الميزة في SpecKit | تقدم الميزة في SpecKit | حالة كتابة الأكواد (Backend + Frontend) |
-|---------|------|---------|-------|-------------------|----------------------|------------------------|----------------------------------------|
+| clarify | plan | specify | tasks | الميزة في SpecKit | ID الميزة في SpecKit | تقدم الميزة في SpecKit | حالة كتابة الأكواد Backend | Frontend |
+|---------|------|---------|-------|---------------|-----------------|---------------|------------|---|
 | ✅ | ✅ | ✅ | ✅ | Done | FEAT-CV-CREATION | 100% | InProgress (~75%) |
 | ✅ | ✅ | ✅ | ✅ | Done | FEAT-USER-REGISTRATION | 100% | InProgress (~65%) |
 
